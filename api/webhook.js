@@ -13,7 +13,6 @@ export default async function handler(req, res) {
   try {
     const email = event.data?.attributes?.user_email
     const eventName = event.meta?.event_name
-    const variantName = event.data?.attributes?.variant_name ?? ''
     const productName = event.data?.attributes?.first_order_item?.product_name ?? ''
 
     if (eventName === 'subscription_created' || eventName === 'subscription_updated') {
@@ -26,7 +25,10 @@ export default async function handler(req, res) {
         .eq('email', email)
     }
 
-    if (eventName === 'order_created') {
+    if (eventName === 'order_created' && 
+        (productName.toLowerCase().includes('top-up') ||
+         productName.toLowerCase().includes('small pack') ||
+         productName.toLowerCase().includes('large pack'))) {
       const credits = productName.toLowerCase().includes('large') ? 25 : 10
 
       await supabase.rpc('add_topup_credits', {
