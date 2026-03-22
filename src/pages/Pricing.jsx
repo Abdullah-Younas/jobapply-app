@@ -23,7 +23,7 @@ export default function Pricing() {
       features: ['AI skill matching', 'AI cover letter', 'Auto-send enabled', 'Application log', 'Top-up credits available'],
       notIncluded: ['Analytics dashboard', 'Priority support'],
       cta: 'Get Standard',
-      action: () => window.open('https://your-lemonsqueezy-link.com', '_blank'),
+      action: () => window.open('https://xautoapplyai.lemonsqueezy.com/checkout/buy/347cdda1-5173-4863-983a-c9b0ea673931', '_blank'),
       highlight: true
     },
     {
@@ -34,7 +34,7 @@ export default function Pricing() {
       features: ['AI skill matching', 'AI cover letter', 'Auto-send enabled', 'Application log', 'Top-up credits available', 'Analytics dashboard', 'Priority support'],
       notIncluded: [],
       cta: 'Get Premium',
-      action: () => window.open('https://your-lemonsqueezy-link.com', '_blank'),
+      action: () => window.open('https://xautoapplyai.lemonsqueezy.com/checkout/buy/62955451-5397-41d6-966b-f7c1ea364655', '_blank'),
       highlight: false
     }
   ]
@@ -102,14 +102,14 @@ export default function Pricing() {
                 <div className="font-medium text-gray-900 text-sm">Small pack</div>
                 <div className="text-xs text-gray-400">10 extra applications</div>
               </div>
-              <button className="bg-violet-600 text-white text-sm px-4 py-2 rounded-lg hover:bg-violet-700 transition">$3</button>
+              <button onClick={() => window.open('https://xautoapplyai.lemonsqueezy.com/checkout/buy/6a62072c-9f2b-4cbb-b37f-0d634828d72a', '_blank')} className="bg-violet-600 text-white text-sm px-4 py-2 rounded-lg hover:bg-violet-700 transition">$3</button>
             </div>
             <div className="border rounded-xl p-4 flex justify-between items-center flex-1">
               <div>
                 <div className="font-medium text-gray-900 text-sm">Large pack</div>
                 <div className="text-xs text-gray-400">25 extra applications</div>
               </div>
-              <button className="bg-violet-600 text-white text-sm px-4 py-2 rounded-lg hover:bg-violet-700 transition">$6</button>
+              <button onClick={() => window.open('https://xautoapplyai.lemonsqueezy.com/checkout/buy/8e9b9d72-bc63-4a2a-bef3-0061f81bb4c8', '_blank')} className="bg-violet-600 text-white text-sm px-4 py-2 rounded-lg hover:bg-violet-700 transition">$6</button>
             </div>
           </div>
         </div>
