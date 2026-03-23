@@ -81,13 +81,33 @@ export default function Dashboard() {
           )}
         </div>
 
-        {/* Upgrade nudge */}
-        {pct >= 80 && profile?.plan !== 'premium' && (
-          <div className="bg-violet-50 border border-violet-200 rounded-xl p-4 text-sm text-violet-800 mb-4">
-            You're running low on applications.
-            <button onClick={() => navigate('/pricing')} className="font-medium underline ml-1">Buy top-up credits or upgrade →</button>
+        {/* Upgrade nudge when > 80% used */}
+          {pct >= 80 && profile?.plan !== 'premium' && (
+            <div className="bg-violet-50 border border-violet-200 rounded-xl p-4 text-sm text-violet-800 mb-4">
+              You're running low on applications.
+              <button onClick={() => navigate('/pricing')} className="font-medium underline ml-1">Upgrade or buy top-up credits →</button>
+            </div>
+          )}
+
+        {/* Top-up credits for ALL tiers including free */}
+          <div className="bg-white border rounded-xl p-5 mt-4">
+            <div className="font-medium text-gray-900 mb-1">Need more applications?</div>
+            <p className="text-sm text-gray-500 mb-4">Buy top-up credits — they never expire and work on any plan.</p>
+            <div className="flex gap-3">
+              <button
+                onClick={() => window.open('https://xautoapplyai.lemonsqueezy.com/checkout/buy/6a62072c-9f2b-4cbb-b37f-0d634828d72a', '_blank')}
+                className="flex-1 border rounded-xl py-3 text-sm font-medium text-gray-700 hover:bg-gray-50 transition text-center"
+              >
+                10 credits — $3
+              </button>
+              <button
+                onClick={() => window.open('https://xautoapplyai.lemonsqueezy.com/checkout/buy/8e9b9d72-bc63-4a2a-bef3-0061f81bb4c8', '_blank')}
+                className="flex-1 bg-violet-600 text-white rounded-xl py-3 text-sm font-medium hover:bg-violet-700 transition text-center"
+              >
+                25 credits — $6
+              </button>
+            </div>
           </div>
-        )}
 
         {/* Quick actions */}
         <div className="grid grid-cols-2 gap-4 mt-6">
