@@ -34,7 +34,7 @@ export default function Settings() {
   return (
     <div className="min-h-screen bg-gray-50">
       <nav className="bg-white border-b px-8 py-4 flex justify-between items-center">
-        <div className="text-xl font-semibold text-violet-600">JobApply AI</div>
+        <div className="text-xl font-semibold text-violet-600">Nuxply</div>
         <button onClick={() => navigate('/dashboard')} className="text-sm text-gray-500 hover:text-gray-800">← Back to dashboard</button>
       </nav>
 

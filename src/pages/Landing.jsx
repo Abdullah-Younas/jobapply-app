@@ -7,7 +7,7 @@ export default function Landing() {
     <div className="min-h-screen bg-white">
       {/* Navbar */}
       <nav className="flex justify-between items-center px-8 py-4 border-b">
-        <div className="text-xl font-semibold text-violet-600">JobApply AI</div>
+        <div className="text-xl font-semibold text-violet-600">Nuxply</div>
         <div className="flex gap-4">
           <button onClick={() => navigate('/pricing')} className="text-gray-500 hover:text-gray-800 text-sm">Pricing</button>
           <button onClick={() => navigate('/login')} className="bg-violet-600 text-white px-4 py-2 rounded-lg text-sm">Get Started</button>
@@ -42,7 +42,7 @@ export default function Landing() {
 
       {/* Footer */}
       <div className="text-center py-8 text-gray-400 text-sm border-t">
-        © 2026 JobApply AI. Built by Abdullah.
+        © 2026 Nuxply. Built by Abdullah.
       </div>
     </div>
   )

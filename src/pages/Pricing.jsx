@@ -42,7 +42,7 @@ export default function Pricing() {
   return (
     <div className="min-h-screen bg-white">
       <nav className="flex justify-between items-center px-8 py-4 border-b">
-        <div className="text-xl font-semibold text-violet-600">JobApply AI</div>
+        <div className="text-xl font-semibold text-violet-600">Nuxply</div>
         <button onClick={() => navigate('/')} className="text-sm text-gray-500 hover:text-gray-800">← Back</button>
       </nav>
 

@@ -40,7 +40,7 @@ export default function Login() {
   return (
     <div className="min-h-screen bg-white flex items-center justify-center">
       <div className="w-full max-w-md border rounded-2xl p-8">
-        <div className="text-xl font-semibold text-violet-600 text-center mb-8">JobApply AI</div>
+        <div className="text-xl font-semibold text-violet-600 text-center mb-8">Nuxply</div>
         <h2 className="text-2xl font-semibold text-gray-900 mb-2">{isSignup ? 'Create account' : 'Welcome back'}</h2>
         <p className="text-gray-500 text-sm mb-8">{isSignup ? 'Start applying to jobs automatically' : 'Sign in to your account'}</p>
 
