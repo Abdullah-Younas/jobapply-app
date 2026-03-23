@@ -10,7 +10,10 @@ export default function Profile() {
     name: '',
     skills: '',
     experience: '',
-    job_title_preference: ''
+    job_title_preference: '',
+    job_type: 'any',
+    country: '',
+    city: ''
   })
   const navigate = useNavigate()
 
@@ -30,7 +33,10 @@ export default function Profile() {
           name: data.name ?? session.user.user_metadata?.full_name ?? '',
           skills: data.skills ? data.skills.join(', ') : '',
           experience: data.experience ?? '',
-          job_title_preference: data.job_title_preference ?? ''
+          job_title_preference: data.job_title_preference ?? '',
+          job_type: data.job_type ?? 'any',
+          country: data.country ?? '',
+          city: data.city ?? ''
         })
       }
       setLoading(false)
@@ -59,7 +65,10 @@ export default function Profile() {
           name: form.name,
           skills: skillsArray,
           experience: form.experience,
-          job_title_preference: form.job_title_preference
+          job_title_preference: form.job_title_preference,
+          job_type: form.job_type,
+          country: form.country,
+          city: form.city
         })
         .eq('email', session.user.email)
     } else {
@@ -139,6 +148,44 @@ export default function Profile() {
               rows={4}
               placeholder="2 years of experience in web development, worked on e-commerce projects..."
             />
+          </div>
+
+          <div>
+            <label className="text-sm font-medium text-gray-700 block mb-2">Job type preference</label>
+            <select
+              value={form.job_type}
+              onChange={e => setForm({ ...form, job_type: e.target.value })}
+              className="w-full border rounded-xl px-4 py-3 text-sm outline-none focus:border-violet-400"
+            >
+              <option value="any">Any</option>
+              <option value="remote">Remote only</option>
+              <option value="hybrid">Hybrid</option>
+              <option value="onsite">On-site</option>
+            </select>
+          </div>
+
+          <div>
+            <label className="text-sm font-medium text-gray-700 block mb-2">Country</label>
+            <input
+              type="text"
+              value={form.country}
+              onChange={e => setForm({ ...form, country: e.target.value })}
+              className="w-full border rounded-xl px-4 py-3 text-sm outline-none focus:border-violet-400"
+              placeholder="Pakistan, United States, United Kingdom..."
+            />
+            <p className="text-xs text-gray-400 mt-1">Leave empty for worldwide search</p>
+          </div>
+
+          <div>
+            <label className="text-sm font-medium text-gray-700 block mb-2">City</label>
+            <input
+              type="text"
+              value={form.city}
+              onChange={e => setForm({ ...form, city: e.target.value })}
+              className="w-full border rounded-xl px-4 py-3 text-sm outline-none focus:border-violet-400"
+              placeholder="Karachi, Lahore, New York..."
+            />
+            <p className="text-xs text-gray-400 mt-1">Only used for hybrid and on-site jobs</p>
           </div>
 
           {success && <p className="text-green-600 text-sm">Profile saved! Redirecting...</p>}
