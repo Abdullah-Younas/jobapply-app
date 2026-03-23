@@ -81,6 +81,10 @@ export default function Dashboard() {
           )}
         </div>
 
+        <div className="bg-blue-50 border border-blue-100 rounded-xl p-4 text-sm text-blue-700 mt-4">
+          Your AI applies to <strong>{profile?.plan === 'premium' ? '20' : profile?.plan === 'standard' ? '5' : '2'} new jobs every day</strong> automatically. Check your applications tab daily for new matches and cover letters.
+        </div>
+
         {/* Upgrade nudge when > 80% used */}
           {pct >= 80 && profile?.plan !== 'premium' && (
             <div className="bg-violet-50 border border-violet-200 rounded-xl p-4 text-sm text-violet-800 mb-4">
