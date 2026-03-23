@@ -14,13 +14,22 @@ export default function Applications() {
       const { data: { session } } = await supabase.auth.getSession()
       if (!session) return
 
-      const { data: profile } = await supabase
+      const { data: profile, error: profileError } = await supabase
         .from('users')
         .select('id')
         .eq('email', session.user.email)
-        .single()
+        .maybeSingle()
 
-      if (!profile) return
+      if (!profile) {
+        await supabase.from('users').insert({
+          name: session.user.user_metadata?.full_name ?? '',
+          email: session.user.email,
+          plan: 'free',
+          monthly_quota: 10,
+          topup_credits: 0
+        })
+        return
+      }
 
       const { data } = await supabase
         .from('applications')
