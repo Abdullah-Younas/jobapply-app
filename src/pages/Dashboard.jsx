@@ -34,7 +34,7 @@ export default function Dashboard() {
 
   if (loading) return <div className="flex items-center justify-center h-screen text-gray-500">Loading...</div>
 
-  const total = profile?.plan === 'premium' ? 50 : profile?.plan === 'standard' ? 25 : 5
+  const total = profile?.plan === 'premium' ? 100 : profile?.plan === 'standard' ? 50 : 10
   const used = total - (profile?.monthly_quota ?? total)
   const pct = Math.round((used / total) * 100)
 

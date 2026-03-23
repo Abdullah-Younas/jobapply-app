@@ -74,7 +74,7 @@ export default function Settings() {
           <h2 className="text-sm font-medium text-gray-700 mb-4">Subscription</h2>
           {profile?.plan === 'free' ? (
             <div>
-              <p className="text-sm text-gray-500 mb-4">You are on the free plan — 5 applications/month.</p>
+              <p className="text-sm text-gray-500 mb-4">You are on the free plan — 10 applications/month.</p>
               <button
                 onClick={() => navigate('/pricing')}
                 className="w-full bg-violet-600 text-white py-3 rounded-xl text-sm font-medium hover:bg-violet-700 transition"
