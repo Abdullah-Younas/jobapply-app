@@ -5,7 +5,9 @@ import { supabase } from '../lib/supabase'
 export default function Profile() {
   const [loading, setLoading] = useState(true)
   const [saving, setSaving] = useState(false)
+  const [uploading, setUploading] = useState(false)
   const [success, setSuccess] = useState(false)
+  const [cvSuccess, setCvSuccess] = useState(false)
   const [form, setForm] = useState({
     name: '',
     skills: '',
@@ -26,7 +28,7 @@ export default function Profile() {
         .from('users')
         .select('*')
         .eq('email', session.user.email)
-        .single()
+        .maybeSingle()
 
       if (data) {
         setForm({
@@ -44,19 +46,101 @@ export default function Profile() {
     load()
   }, [])
 
+  async function handleCVUpload(e) {
+    const file = e.target.files[0]
+    if (!file) return
+    if (file.type !== 'application/pdf') {
+      alert('Please upload a PDF file')
+      return
+    }
+
+    setUploading(true)
+
+    try {
+      const { data: { session } } = await supabase.auth.getSession()
+
+      // Upload to Supabase Storage
+      const filePath = `${session.user.id}/cv.pdf`
+      const { error: uploadError } = await supabase.storage
+        .from('cvs')
+        .upload(filePath, file, { upsert: true })
+
+      if (uploadError) throw uploadError
+
+      // Read PDF as base64
+      const base64 = await new Promise((resolve, reject) => {
+        const reader = new FileReader()
+        reader.onload = () => resolve(reader.result.split(',')[1])
+        reader.onerror = reject
+        reader.readAsDataURL(file)
+      })
+
+      // Send to Claude API to extract info
+      const response = await fetch('https://api.anthropic.com/v1/messages', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-api-key': import.meta.env.VITE_CLAUDE_API_KEY,
+          'anthropic-version': '2023-06-01'
+        },
+        body: JSON.stringify({
+          model: 'claude-haiku-4-5-20251001',
+          max_tokens: 1000,
+          messages: [{
+            role: 'user',
+            content: [
+              {
+                type: 'document',
+                source: {
+                  type: 'base64',
+                  media_type: 'application/pdf',
+                  data: base64
+                }
+              },
+              {
+                type: 'text',
+                text: 'Extract from this CV: 1) A comma separated list of technical skills 2) A 2 sentence experience summary 3) The most recent job title. Reply in this exact format:\nSKILLS: skill1, skill2, skill3\nEXPERIENCE: summary here\nJOB_TITLE: job title here'
+              }
+            ]
+          }]
+        })
+      })
+
+      const data = await response.json()
+      const text = data.content[0].text
+
+      // Parse Claude response
+      const skillsMatch = text.match(/SKILLS:\s*(.+)/i)
+      const experienceMatch = text.match(/EXPERIENCE:\s*(.+)/i)
+      const jobTitleMatch = text.match(/JOB_TITLE:\s*(.+)/i)
+
+      if (skillsMatch) setForm(prev => ({ ...prev, skills: skillsMatch[1].trim() }))
+      if (experienceMatch) setForm(prev => ({ ...prev, experience: experienceMatch[1].trim() }))
+      if (jobTitleMatch) setForm(prev => ({ ...prev, job_title_preference: jobTitleMatch[1].trim() }))
+
+      setCvSuccess(true)
+      setTimeout(() => setCvSuccess(false), 3000)
+
+    } catch (err) {
+      console.error(err)
+      alert('Failed to process CV. Please try again.')
+    }
+
+    setUploading(false)
+  }
+
   async function handleSave() {
     setSaving(true)
     setSuccess(false)
 
     const { data: { session } } = await supabase.auth.getSession()
-
     const skillsArray = form.skills.split(',').map(s => s.trim()).filter(Boolean)
 
     const { data: existing } = await supabase
       .from('users')
       .select('id')
       .eq('email', session.user.email)
-      .single()
+      .maybeSingle()
 
     if (existing) {
       await supabase
@@ -80,8 +164,11 @@ export default function Profile() {
           skills: skillsArray,
           experience: form.experience,
           job_title_preference: form.job_title_preference,
+          job_type: form.job_type,
+          country: form.country,
+          city: form.city,
           plan: 'free',
-          monthly_quota: 5,
+          monthly_quota: 10,
           topup_credits: 0
         })
     }
@@ -102,7 +189,32 @@ export default function Profile() {
 
       <div className="max-w-xl mx-auto px-6 py-10">
         <h1 className="text-2xl font-semibold text-gray-900 mb-2">Your profile</h1>
-        <p className="text-gray-500 text-sm mb-8">This info is used to match and apply to jobs automatically.</p>
+        <p className="text-gray-500 text-sm mb-8">This info is used to find and match jobs automatically.</p>
+
+        {/* CV Upload */}
+        <div className="bg-white border-2 border-dashed border-violet-200 rounded-xl p-6 mb-6 text-center">
+          <div className="text-sm font-medium text-gray-700 mb-2">Upload your CV</div>
+          <p className="text-xs text-gray-400 mb-4">We'll automatically extract your skills and experience</p>
+          <label className="cursor-pointer">
+            <input
+              type="file"
+              accept=".pdf"
+              onChange={handleCVUpload}
+              className="hidden"
+              disabled={uploading}
+            />
+            <span className={`inline-block px-6 py-2 rounded-xl text-sm font-medium transition ${
+              uploading
+                ? 'bg-gray-100 text-gray-400'
+                : 'bg-violet-600 text-white hover:bg-violet-700'
+            }`}>
+              {uploading ? 'Reading your CV...' : 'Upload PDF'}
+            </span>
+          </label>
+          {cvSuccess && (
+            <p className="text-green-600 text-sm mt-3">CV processed! Skills and experience auto-filled below.</p>
+          )}
+        </div>
 
         <div className="bg-white border rounded-xl p-6 flex flex-col gap-5">
           <div>
@@ -136,7 +248,7 @@ export default function Profile() {
               className="w-full border rounded-xl px-4 py-3 text-sm outline-none focus:border-violet-400"
               placeholder="React, Node.js, Python, SQL..."
             />
-            <p className="text-xs text-gray-400 mt-1">Separate skills with commas</p>
+            <p className="text-xs text-gray-400 mt-1">Separate with commas — or upload your CV above to auto-fill</p>
           </div>
 
           <div>
@@ -146,7 +258,7 @@ export default function Profile() {
               onChange={e => setForm({ ...form, experience: e.target.value })}
               className="w-full border rounded-xl px-4 py-3 text-sm outline-none focus:border-violet-400 resize-none"
               rows={4}
-              placeholder="2 years of experience in web development, worked on e-commerce projects..."
+              placeholder="2 years of experience in web development..."
             />
           </div>
 
@@ -171,7 +283,7 @@ export default function Profile() {
               value={form.country}
               onChange={e => setForm({ ...form, country: e.target.value })}
               className="w-full border rounded-xl px-4 py-3 text-sm outline-none focus:border-violet-400"
-              placeholder="Pakistan, United States, United Kingdom..."
+              placeholder="Pakistan, United States..."
             />
             <p className="text-xs text-gray-400 mt-1">Leave empty for worldwide search</p>
           </div>
@@ -202,3 +314,4 @@ export default function Profile() {
     </div>
   )
 }
+
