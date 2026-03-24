@@ -6,9 +6,33 @@ export default function ProtectedRoute({ children }) {
   const [session, setSession] = useState(undefined)
 
   useEffect(() => {
-    supabase.auth.getSession().then(({ data }) => {
-      setSession(data.session)
-    })
+    async function init() {
+      const { data } = await supabase.auth.getSession()
+      const session = data.session
+
+      if (session) {
+        // Auto-create profile if doesn't exist
+        const { data: existing } = await supabase
+          .from('users')
+          .select('id')
+          .eq('email', session.user.email)
+          .maybeSingle()
+
+        if (!existing) {
+          await supabase.from('users').insert({
+            name: session.user.user_metadata?.full_name ?? '',
+            email: session.user.email,
+            plan: 'free',
+            monthly_quota: 10,
+            topup_credits: 0,
+            daily_sent: 0
+          })
+        }
+      }
+
+      setSession(session)
+    }
+    init()
   }, [])
 
   if (session === undefined) return <div className="flex items-center justify-center h-screen text-gray-500">Loading...</div>
