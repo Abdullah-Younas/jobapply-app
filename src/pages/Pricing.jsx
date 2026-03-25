@@ -23,7 +23,7 @@ export default function Pricing() {
       items: [{ priceId, quantity: 1 }]
     })
   }
-
+  //ggs
   const plans = [
     {
       name: 'Free', price: '$0', period: 'forever', apps: '10 job matches/month',
