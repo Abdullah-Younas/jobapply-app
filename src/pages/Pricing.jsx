@@ -1,13 +1,28 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { initializePaddle } from '@paddle/paddle-js'
 
 export default function Pricing() {
   const navigate = useNavigate()
   const [dark, setDark] = useState(() => document.documentElement.getAttribute('data-theme') === 'dark' || window.matchMedia('(prefers-color-scheme: dark)').matches)
+  const [paddle, setPaddle] = useState(null)
 
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light')
   }, [dark])
+
+  useEffect(() => {
+    initializePaddle({
+      environment: 'production',
+      token: import.meta.env.VITE_PADDLE_TOKEN
+    }).then(p => setPaddle(p))
+  }, [])
+
+  function openCheckout(priceId) {
+    paddle?.Checkout.open({
+      items: [{ priceId, quantity: 1 }]
+    })
+  }
 
   const plans = [
     {
@@ -18,18 +33,18 @@ export default function Pricing() {
       cta: 'Get started free', action: () => navigate('/login'), highlight: false
     },
     {
-      name: 'Standard', price: '$8.99', period: '/month', apps: '50 job matches/month',
+      name: 'Standard', price: '$9', period: '/month', apps: '50 job matches/month',
       desc: 'Best for active job seekers',
       features: ['AI skill matching','AI cover letter','Daily auto-matching','Application log','CV upload','Top-up credits available'],
       notIncluded: ['Priority support'],
-      cta: 'Get Standard', action: () => window.open('https://xautoapplyai.lemonsqueezy.com/checkout/buy/347cdda1-5173-4863-983a-c9b0ea673931','_blank'), highlight: true
+      cta: 'Get Standard', action: () => openCheckout('pri_01kmjryv5fyhkkqw1jq8e6dkyq'), highlight: true
     },
     {
       name: 'Premium', price: '$25', period: '/month', apps: '100 job matches/month',
       desc: 'Maximum reach, fast results',
       features: ['AI skill matching','AI cover letter','Daily auto-matching','Application log','CV upload','Top-up credits available','Priority support'],
       notIncluded: [],
-      cta: 'Get Premium', action: () => window.open('https://xautoapplyai.lemonsqueezy.com/checkout/buy/62955451-5397-41d6-966b-f7c1ea364655','_blank'), highlight: false
+      cta: 'Get Premium', action: () => openCheckout('pri_01kmjs00hgnzqbchrqgzky9cq1'), highlight: false
     }
   ]
 
@@ -66,7 +81,7 @@ export default function Pricing() {
         .topup-section{background:var(--bg2);border:1px solid var(--border);border-radius:20px;padding:32px;}
         .topup-cards{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:20px;}
         .topup-card{border:1px solid var(--border);border-radius:14px;padding:20px;display:flex;justify-content:space-between;align-items:center;}
-        .topup-price-btn{background:var(--violet);color:white;border:none;padding:8px 16px;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;font-family:sans-serif;}
+        .topup-price-btn{background:var(--violet);color:white;border:none;padding:8px 16px;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;font-family:sans-serif;transition:all 0.2s;}
         .topup-price-btn:hover{background:var(--violet2);}
         @media(max-width:768px){.plans-grid{grid-template-columns:1fr;}.topup-cards{grid-template-columns:1fr;}.pricing-nav{padding:16px 24px;}}
       `}</style>
@@ -109,14 +124,14 @@ export default function Pricing() {
                 <div style={{fontSize:'14px',fontWeight:'700',color:'var(--text)',fontFamily:'sans-serif'}}>Small pack</div>
                 <div style={{fontSize:'12px',color:'var(--text3)',fontFamily:'sans-serif',marginTop:'2px'}}>10 extra job matches</div>
               </div>
-              <button className="topup-price-btn" onClick={() => window.open('https://xautoapplyai.lemonsqueezy.com/checkout/buy/6a62072c-9f2b-4cbb-b37f-0d634828d72a','_blank')}>$3</button>
+              <button className="topup-price-btn" onClick={() => openCheckout('pri_01kmjs1naq2j27v8fsc10t3knx')}>$3</button>
             </div>
             <div className="topup-card">
               <div>
                 <div style={{fontSize:'14px',fontWeight:'700',color:'var(--text)',fontFamily:'sans-serif'}}>Large pack</div>
                 <div style={{fontSize:'12px',color:'var(--text3)',fontFamily:'sans-serif',marginTop:'2px'}}>25 extra job matches</div>
               </div>
-              <button className="topup-price-btn" onClick={() => window.open('https://xautoapplyai.lemonsqueezy.com/checkout/buy/8e9b9d72-bc63-4a2a-bef3-0061f81bb4c8','_blank')}>$6</button>
+              <button className="topup-price-btn" onClick={() => openCheckout('pri_01kmjs2ffjfvtq1rms69t7cznb')}>$6</button>
             </div>
           </div>
         </div>
