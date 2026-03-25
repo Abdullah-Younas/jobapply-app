@@ -14,7 +14,7 @@ export default function Applications() {
       const { data: { session } } = await supabase.auth.getSession()
       if (!session) return
 
-      const { data: profile, error: profileError } = await supabase
+      const { data: profile } = await supabase
         .from('users')
         .select('id')
         .eq('email', session.user.email)
@@ -44,10 +44,7 @@ export default function Applications() {
   }, [])
 
   async function updateStatus(id, status) {
-    await supabase
-      .from('applications')
-      .update({ status })
-      .eq('id', id)
+    await supabase.from('applications').update({ status }).eq('id', id)
     setApplications(prev => prev.map(a => a.id === id ? { ...a, status } : a))
     if (selectedApp?.id === id) setSelectedApp(prev => ({ ...prev, status }))
   }
@@ -74,7 +71,7 @@ export default function Applications() {
         <div className="grid grid-cols-4 gap-3 mb-8">
           {[
             { label: 'Total', value: applications.length, color: 'text-gray-900' },
-            { label: 'Sent', value: applications.filter(a => a.status === 'sent').length, color: 'text-blue-600' },
+            { label: 'Found', value: applications.filter(a => a.status === 'sent').length, color: 'text-blue-600' },
             { label: 'Replied', value: applications.filter(a => a.status === 'replied').length, color: 'text-green-600' },
             { label: 'Rejected', value: applications.filter(a => a.status === 'rejected').length, color: 'text-red-500' },
           ].map(stat => (
@@ -87,7 +84,7 @@ export default function Applications() {
 
         {applications.length === 0 ? (
           <div className="bg-white border rounded-xl p-10 text-center">
-            <p className="text-gray-400 text-sm">No applications yet.</p>
+            <p className="text-gray-400 text-sm">No jobs found yet.</p>
             <p className="text-gray-400 text-xs mt-1">Your AI will find matching jobs and log them here automatically.</p>
           </div>
         ) : (
@@ -106,7 +103,7 @@ export default function Applications() {
                       app.status === 'replied' ? 'bg-green-50 text-green-600' :
                       app.status === 'rejected' ? 'bg-red-50 text-red-600' :
                       'bg-gray-50 text-gray-600'
-                    }`}>{app.status}</span>
+                    }`}>{app.status === 'sent' ? 'found' : app.status}</span>
                     <span className="text-xs text-gray-400">Match: {app.match_score}%</span>
                   </div>
                 </div>
@@ -137,15 +134,8 @@ export default function Applications() {
       </div>
 
       {selectedApp && (
-        <div
-          className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50"
-          onClick={() => setSelectedApp(null)}
-        >
-          <div
-            className="bg-white rounded-2xl p-6 max-w-2xl w-full overflow-y-auto"
-            style={{ maxHeight: '90vh' }}
-            onClick={e => e.stopPropagation()}
-          >
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50" onClick={() => setSelectedApp(null)}>
+          <div className="bg-white rounded-2xl p-6 max-w-2xl w-full overflow-y-auto" style={{ maxHeight: '90vh' }} onClick={e => e.stopPropagation()}>
             <div className="flex justify-between items-start mb-4">
               <div>
                 <h2 className="text-lg font-semibold text-gray-900">{selectedApp.job_title}</h2>
@@ -156,25 +146,15 @@ export default function Applications() {
                     selectedApp.status === 'replied' ? 'bg-green-50 text-green-600' :
                     selectedApp.status === 'rejected' ? 'bg-red-50 text-red-600' :
                     'bg-gray-50 text-gray-600'
-                  }`}>{selectedApp.status}</span>
+                  }`}>{selectedApp.status === 'sent' ? 'found' : selectedApp.status}</span>
                   <span className="text-xs text-gray-400">Match: {selectedApp.match_score}%</span>
                 </div>
               </div>
-              <button
-                onClick={() => setSelectedApp(null)}
-                className="text-gray-400 hover:text-gray-600 text-xl font-light ml-4"
-              >
-                x
-              </button>
+              <button onClick={() => setSelectedApp(null)} className="text-gray-400 hover:text-gray-600 text-xl font-light ml-4">x</button>
             </div>
 
             {selectedApp.job_url && (
-              <a
-                href={selectedApp.job_url}
-                target="_blank"
-                rel="noreferrer"
-                className="block w-full text-center bg-violet-600 text-white py-3 rounded-xl font-medium text-sm hover:bg-violet-700 transition mb-5"
-              >
+              <a href={selectedApp.job_url} target="_blank" rel="noreferrer" className="block w-full text-center bg-violet-600 text-white py-3 rounded-xl font-medium text-sm hover:bg-violet-700 transition mb-5">
                 Open job listing and apply
               </a>
             )}
@@ -182,10 +162,7 @@ export default function Applications() {
             <div className="mb-5">
               <div className="flex justify-between items-center mb-2">
                 <div className="text-sm font-medium text-gray-700">Your cover letter</div>
-                <button
-                  onClick={() => copyToClipboard(selectedApp.cover_letter)}
-                  className={`text-xs px-3 py-1 rounded-lg transition ${copied ? 'bg-green-100 text-green-600' : 'bg-gray-100 hover:bg-gray-200 text-gray-600'}`}
-                >
+                <button onClick={() => copyToClipboard(selectedApp.cover_letter)} className={`text-xs px-3 py-1 rounded-lg transition ${copied ? 'bg-green-100 text-green-600' : 'bg-gray-100 hover:bg-gray-200 text-gray-600'}`}>
                   {copied ? 'Copied!' : 'Copy'}
                 </button>
               </div>
@@ -195,18 +172,8 @@ export default function Applications() {
             </div>
 
             <div className="flex gap-3 pt-4 border-t">
-              <button
-                onClick={() => updateStatus(selectedApp.id, 'replied')}
-                className="flex-1 border py-2 rounded-xl text-sm text-green-600 hover:bg-green-50 transition"
-              >
-                Got a reply
-              </button>
-              <button
-                onClick={() => updateStatus(selectedApp.id, 'rejected')}
-                className="flex-1 border py-2 rounded-xl text-sm text-red-400 hover:bg-red-50 transition"
-              >
-                Mark rejected
-              </button>
+              <button onClick={() => updateStatus(selectedApp.id, 'replied')} className="flex-1 border py-2 rounded-xl text-sm text-green-600 hover:bg-green-50 transition">Got a reply</button>
+              <button onClick={() => updateStatus(selectedApp.id, 'rejected')} className="flex-1 border py-2 rounded-xl text-sm text-red-400 hover:bg-red-50 transition">Mark rejected</button>
             </div>
           </div>
         </div>

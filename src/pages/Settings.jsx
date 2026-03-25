@@ -11,13 +11,7 @@ export default function Settings() {
     async function load() {
       const { data: { session } } = await supabase.auth.getSession()
       if (!session) return
-
-      const { data } = await supabase
-        .from('users')
-        .select('*')
-        .eq('email', session.user.email)
-        .single()
-
+      const { data } = await supabase.from('users').select('*').eq('email', session.user.email).single()
       setProfile(data)
       setLoading(false)
     }
@@ -42,7 +36,6 @@ export default function Settings() {
         <h1 className="text-2xl font-semibold text-gray-900 mb-2">Settings</h1>
         <p className="text-gray-500 text-sm mb-8">Manage your account and subscription.</p>
 
-        {/* Account info */}
         <div className="bg-white border rounded-xl p-6 mb-4">
           <h2 className="text-sm font-medium text-gray-700 mb-4">Account</h2>
           <div className="flex flex-col gap-3">
@@ -59,7 +52,7 @@ export default function Settings() {
               <span className="bg-violet-100 text-violet-700 text-xs font-medium px-3 py-1 rounded-full capitalize">{profile?.plan ?? 'free'}</span>
             </div>
             <div className="flex justify-between text-sm">
-              <span className="text-gray-500">Applications remaining</span>
+              <span className="text-gray-500">Credits remaining</span>
               <span className="text-gray-900 font-medium">{profile?.monthly_quota ?? 0}</span>
             </div>
             <div className="flex justify-between text-sm">
@@ -69,41 +62,24 @@ export default function Settings() {
           </div>
         </div>
 
-        {/* Subscription */}
         <div className="bg-white border rounded-xl p-6 mb-4">
           <h2 className="text-sm font-medium text-gray-700 mb-4">Subscription</h2>
           {profile?.plan === 'free' ? (
             <div>
-              <p className="text-sm text-gray-500 mb-4">You are on the free plan — 10 applications/month.</p>
-              <button
-                onClick={() => navigate('/pricing')}
-                className="w-full bg-violet-600 text-white py-3 rounded-xl text-sm font-medium hover:bg-violet-700 transition"
-              >
-                Upgrade plan
-              </button>
+              <p className="text-sm text-gray-500 mb-4">You are on the free plan — 10 credits/month.</p>
+              <button onClick={() => navigate('/pricing')} className="w-full bg-violet-600 text-white py-3 rounded-xl text-sm font-medium hover:bg-violet-700 transition">Upgrade plan</button>
             </div>
           ) : (
             <div>
               <p className="text-sm text-gray-500 mb-4">You are on the <span className="font-medium capitalize text-gray-900">{profile?.plan}</span> plan.</p>
-              <button
-                onClick={() => navigate('/pricing')}
-                className="w-full border py-3 rounded-xl text-sm font-medium text-gray-700 hover:bg-gray-50 transition"
-              >
-                Manage subscription
-              </button>
+              <button onClick={() => navigate('/pricing')} className="w-full border py-3 rounded-xl text-sm font-medium text-gray-700 hover:bg-gray-50 transition">Manage subscription</button>
             </div>
           )}
         </div>
 
-        {/* Danger zone */}
         <div className="bg-white border border-red-100 rounded-xl p-6">
           <h2 className="text-sm font-medium text-red-500 mb-4">Danger zone</h2>
-          <button
-            onClick={handleSignOut}
-            className="w-full border border-red-200 text-red-500 py-3 rounded-xl text-sm font-medium hover:bg-red-50 transition"
-          >
-            Sign out
-          </button>
+          <button onClick={handleSignOut} className="w-full border border-red-200 text-red-500 py-3 rounded-xl text-sm font-medium hover:bg-red-50 transition">Sign out</button>
         </div>
       </div>
     </div>
