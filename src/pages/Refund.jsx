@@ -13,16 +13,16 @@ export default function Refund() {
         <p style={{color:'var(--text3)',fontSize:'14px',marginBottom:'40px'}}>Last updated: March 2026</p>
 
         <h2 style={{fontSize:'18px',fontWeight:'700',marginBottom:'12px',marginTop:'32px'}}>Subscription Plans</h2>
-        <p style={{color:'var(--text2)',marginBottom:'16px'}}>We offer a 7-day money-back guarantee on all new paid subscriptions (Standard and Premium). If you are not satisfied within the first 7 days of your subscription, contact us at support@nuxply.com for a full refund. After 7 days, subscriptions are non-refundable but you may cancel at any time to stop future charges.</p>
+        <p style={{color:'var(--text2)',marginBottom:'16px'}}>We offer a 14-day refund policy on all paid subscriptions (Standard and Premium). If you are not satisfied within the first 14 days of your subscription, contact us at support@nuxply.com for a full refund. No questions asked.</p>
 
         <h2 style={{fontSize:'18px',fontWeight:'700',marginBottom:'12px',marginTop:'32px'}}>Top-up Credits</h2>
-        <p style={{color:'var(--text2)',marginBottom:'16px'}}>Top-up credit packs are non-refundable once purchased. Unused credits carry over indefinitely and never expire as long as your account is active.</p>
+        <p style={{color:'var(--text2)',marginBottom:'16px'}}>Top-up credit packs are eligible for a full refund within 14 days of purchase. Contact support@nuxply.com to request a refund.</p>
 
         <h2 style={{fontSize:'18px',fontWeight:'700',marginBottom:'12px',marginTop:'32px'}}>Cancellations</h2>
-        <p style={{color:'var(--text2)',marginBottom:'16px'}}>You can cancel your subscription at any time from your Settings page. Upon cancellation, you will retain access to your paid plan until the end of your current billing period. No partial refunds are issued for unused days in a billing cycle.</p>
+        <p style={{color:'var(--text2)',marginBottom:'16px'}}>You can cancel your subscription at any time from your Settings page. Upon cancellation you retain access until the end of your billing period.</p>
 
         <h2 style={{fontSize:'18px',fontWeight:'700',marginBottom:'12px',marginTop:'32px'}}>How to Request a Refund</h2>
-        <p style={{color:'var(--text2)',marginBottom:'16px'}}>To request a refund within the 7-day window, email support@nuxply.com with your account email and reason for the refund. We will process eligible refunds within 5-10 business days.</p>
+        <p style={{color:'var(--text2)',marginBottom:'16px'}}>Email support@nuxply.com within 14 days of purchase. We will process your refund within 5-10 business days.</p>
 
         <h2 style={{fontSize:'18px',fontWeight:'700',marginBottom:'12px',marginTop:'32px'}}>Contact</h2>
         <p style={{color:'var(--text2)',marginBottom:'16px'}}>For refund requests or billing questions, contact us at support@nuxply.com</p>
