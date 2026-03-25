@@ -7,6 +7,9 @@ import Profile from './pages/Profile'
 import Applications from './pages/Applications'
 import Pricing from './pages/Pricing'
 import Settings from './pages/Settings'
+import Terms from './pages/Terms'
+import Privacy from './pages/Privacy'
+import Refund from './pages/Refund'
 
 export default function App() {
   return (
@@ -15,6 +18,9 @@ export default function App() {
         <Route path="/" element={<Landing />} />
         <Route path="/login" element={<Login />} />
         <Route path="/pricing" element={<Pricing />} />
+        <Route path="/terms" element={<Terms />} />
+        <Route path="/privacy" element={<Privacy />} />
+        <Route path="/refund" element={<Refund />} />
         <Route path="/dashboard" element={
           <ProtectedRoute><Dashboard /></ProtectedRoute>
         } />

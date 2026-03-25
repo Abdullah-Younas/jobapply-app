@@ -351,8 +351,11 @@ export default function Landing() {
       <div style={{borderTop:'1px solid var(--border)'}}>
         <div className="footer">
           <div className="footer-logo">Nuxply</div>
-          <div className="footer-text">© 2026 Nuxply. All rights reserved.</div>
+          <a href="/terms" style={{color:'var(--text3)',fontSize:'13px',fontFamily:'sans-serif'}}>Terms</a>
+          <a href="/privacy" style={{color:'var(--text3)',fontSize:'13px',fontFamily:'sans-serif'}}>Privacy</a>
+          <a href="/refund" style={{color:'var(--text3)',fontSize:'13px',fontFamily:'sans-serif'}}>Refunds</a>
           <button className="nav-btn nav-ghost" style={{fontSize:'13px'}} onClick={() => navigate('/pricing')}>Pricing</button>
+          <div className="footer-text">© 2026 Nuxply. All rights reserved.</div>
         </div>
       </div>
     </div>
