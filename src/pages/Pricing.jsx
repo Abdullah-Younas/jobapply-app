@@ -1,15 +1,11 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { initializePaddle } from '@paddle/paddle-js'
+import logo from '../assets/logo.png'
 
 export default function Pricing() {
   const navigate = useNavigate()
-  const [dark, setDark] = useState(() => document.documentElement.getAttribute('data-theme') === 'dark' || window.matchMedia('(prefers-color-scheme: dark)').matches)
   const [paddle, setPaddle] = useState(null)
-
-  useEffect(() => {
-    document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light')
-  }, [dark])
 
   useEffect(() => {
     initializePaddle({
@@ -19,84 +15,135 @@ export default function Pricing() {
   }, [])
 
   function openCheckout(priceId) {
-    paddle?.Checkout.open({
-      items: [{ priceId, quantity: 1 }]
-    })
+    paddle?.Checkout.open({ items: [{ priceId, quantity: 1 }] })
   }
-  //ggs
+
   const plans = [
     {
       name: 'Free', price: '$0', period: 'forever', apps: '10 job matches/month',
       desc: 'Get started, no card needed',
-      features: ['AI skill matching','AI cover letter','Application log','CV upload'],
-      notIncluded: ['Daily auto-matching','Priority support','Top-up credits'],
+      features: ['AI skill matching', 'AI cover letter', 'Application log', 'CV upload'],
+      notIncluded: ['Daily auto-matching', 'Priority support', 'Top-up credits'],
       cta: 'Get started free', action: () => navigate('/login'), highlight: false
     },
     {
       name: 'Standard', price: '$9', period: '/month', apps: '50 job matches/month',
       desc: 'Best for active job seekers',
-      features: ['AI skill matching','AI cover letter','Daily auto-matching','Application log','CV upload','Top-up credits available'],
+      features: ['AI skill matching', 'AI cover letter', 'Daily auto-matching', 'Application log', 'CV upload', 'Top-up credits available'],
       notIncluded: ['Priority support'],
       cta: 'Get Standard', action: () => openCheckout('pri_01kmjryv5fyhkkqw1jq8e6dkyq'), highlight: true
     },
     {
       name: 'Premium', price: '$25', period: '/month', apps: '100 job matches/month',
       desc: 'Maximum reach, fast results',
-      features: ['AI skill matching','AI cover letter','Daily auto-matching','Application log','CV upload','Top-up credits available','Priority support'],
+      features: ['AI skill matching', 'AI cover letter', 'Daily auto-matching', 'Application log', 'CV upload', 'Top-up credits available', 'Priority support'],
       notIncluded: [],
       cta: 'Get Premium', action: () => openCheckout('pri_01kmjs00hgnzqbchrqgzky9cq1'), highlight: false
     }
   ]
 
   return (
-    <div style={{minHeight:'100vh',background:'var(--bg)',color:'var(--text)'}}>
+    <div style={{ minHeight: '100vh', background: '#0a0a0a', color: '#e8e8e8', fontFamily: "'Georgia', serif" }}>
       <style>{`
-        .pricing-nav{display:flex;justify-content:space-between;align-items:center;padding:16px 48px;border-bottom:1px solid var(--border);background:var(--bg2);}
-        .pricing-logo{font-size:20px;font-weight:700;color:var(--violet);cursor:pointer;font-family:Georgia,serif;}
-        .back-btn{font-size:13px;color:var(--text2);background:none;border:none;cursor:pointer;font-family:sans-serif;}
-        .theme-btn{width:36px;height:36px;border-radius:50%;border:1px solid var(--border);background:var(--bg2);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:16px;}
-        .pricing-body{max-width:1000px;margin:0 auto;padding:64px 24px;}
-        .pricing-title{font-size:42px;font-weight:700;letter-spacing:-1px;color:var(--text);margin:0 0 12px;font-family:Georgia,serif;text-align:center;}
-        .pricing-sub{font-size:16px;color:var(--text2);font-family:sans-serif;text-align:center;margin-bottom:56px;}
-        .plans-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:48px;}
-        .plan-card{border-radius:20px;padding:28px;border:1px solid var(--border);background:var(--bg2);display:flex;flex-direction:column;transition:all 0.2s;}
-        .plan-card.pop{border-color:var(--violet);background:var(--card-dark);}
-        .plan-card:hover{transform:translateY(-4px);}
-        .pop-badge{background:var(--violet);color:white;font-size:11px;font-weight:700;padding:4px 12px;border-radius:100px;display:inline-block;margin-bottom:16px;font-family:sans-serif;text-transform:uppercase;letter-spacing:0.5px;}
-        .plan-name{font-size:18px;font-weight:700;color:var(--text);margin:0 0 4px;font-family:sans-serif;}
-        .plan-card.pop .plan-name{color:#e0e0e0;}
-        .plan-desc{font-size:13px;color:var(--text3);margin:0 0 16px;font-family:sans-serif;}
-        .plan-price{font-size:36px;font-weight:700;color:var(--text);letter-spacing:-1px;font-family:Georgia,serif;}
-        .plan-card.pop .plan-price{color:#f0f0f0;}
-        .plan-period{font-size:13px;color:var(--text3);font-family:sans-serif;}
-        .plan-apps{font-size:13px;font-weight:700;color:var(--violet);margin:12px 0 20px;font-family:sans-serif;}
-        .plan-features{flex:1;display:flex;flex-direction:column;gap:8px;margin-bottom:24px;}
-        .feat-on{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--text2);font-family:sans-serif;}
-        .plan-card.pop .feat-on{color:#ccc;}
-        .feat-off{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--text3);opacity:0.5;font-family:sans-serif;}
-        .plan-btn{padding:13px;border-radius:12px;font-size:14px;font-weight:700;cursor:pointer;transition:all 0.2s;font-family:sans-serif;border:1px solid var(--border);background:transparent;color:var(--text);}
-        .plan-btn:hover{border-color:var(--violet);color:var(--violet);}
-        .plan-btn.primary{background:var(--violet);color:white;border-color:var(--violet);}
-        .plan-btn.primary:hover{background:var(--violet2);}
-        .topup-section{background:var(--bg2);border:1px solid var(--border);border-radius:20px;padding:32px;}
-        .topup-cards{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:20px;}
-        .topup-card{border:1px solid var(--border);border-radius:14px;padding:20px;display:flex;justify-content:space-between;align-items:center;}
-        .topup-price-btn{background:var(--violet);color:white;border:none;padding:8px 16px;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;font-family:sans-serif;transition:all 0.2s;}
-        .topup-price-btn:hover{background:var(--violet2);}
-        @media(max-width:768px){.plans-grid{grid-template-columns:1fr;}.topup-cards{grid-template-columns:1fr;}.pricing-nav{padding:16px 24px;}}
+        @import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&display=swap');
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        .p-nav {
+          display: flex; justify-content: space-between; align-items: center;
+          padding: 18px clamp(24px, 5vw, 56px);
+          border-bottom: 1px solid #122018;
+          background: rgba(10,10,10,0.9);
+          position: sticky; top: 0; z-index: 100;
+          backdrop-filter: blur(14px);
+        }
+        .p-logo { display: flex; align-items: center; gap: 9px; cursor: pointer; }
+        .p-logo-img { height: 26px; width: 26px; object-fit: contain; }
+        .p-logo-text { font-size: 17px; font-weight: 700; color: #6a9e78; letter-spacing: 0.05em; font-family: 'DM Mono', monospace; }
+        .p-back { font-size: 12px; color: #4a6e54; background: none; border: 1px solid #1a2e1e; border-radius: 8px; cursor: pointer; font-family: 'DM Mono', monospace; padding: 8px 16px; transition: all 0.18s; }
+        .p-back:hover { color: #c9dcc8; border-color: #6a9e78; }
+
+        .p-body { max-width: 1000px; margin: 0 auto; padding: clamp(48px, 8vw, 80px) clamp(24px, 5vw, 48px); }
+        .p-eyebrow { font-size: 10px; font-weight: 700; color: #6a9e78; letter-spacing: 0.12em; text-transform: uppercase; font-family: 'DM Mono', monospace; text-align: center; margin-bottom: 14px; }
+        .p-title { font-size: clamp(30px, 4vw, 44px); font-weight: 700; letter-spacing: -0.03em; color: #e8e8e8; margin-bottom: 12px; text-align: center; line-height: 1.1; }
+        .p-sub { font-size: 14px; color: #4a6e54; font-family: 'DM Mono', monospace; text-align: center; margin-bottom: clamp(40px, 6vw, 64px); }
+
+        .plans-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 40px; }
+
+        .plan-card {
+          background: #0d160f; border: 1px solid #1a2e1e; border-radius: 18px;
+          padding: 28px; display: flex; flex-direction: column;
+          transition: border-color 0.2s, transform 0.2s;
+        }
+        .plan-card:hover { transform: translateY(-3px); border-color: #2e4e38; }
+        .plan-card.pop { border-color: #6a9e78; background: #0e1f12; }
+        .plan-card.pop:hover { border-color: #7ab088; }
+
+        .pop-badge {
+          background: #6a9e78; color: #fff; font-size: 10px; font-weight: 700;
+          padding: 4px 12px; border-radius: 6px; display: inline-block;
+          margin-bottom: 18px; font-family: 'DM Mono', monospace;
+          text-transform: uppercase; letter-spacing: 0.06em; width: fit-content;
+        }
+        .plan-name { font-size: 16px; font-weight: 700; color: #c9dcc8; margin-bottom: 4px; font-family: 'DM Mono', monospace; }
+        .plan-desc { font-size: 12px; color: #2e4e38; margin-bottom: 18px; font-family: 'DM Mono', monospace; }
+        .plan-price { font-size: 38px; font-weight: 700; color: #e8e8e8; letter-spacing: -0.04em; }
+        .plan-period { font-size: 12px; color: #4a6e54; font-family: 'DM Mono', monospace; }
+        .plan-apps { font-size: 12px; font-weight: 700; color: #6a9e78; margin: 14px 0 20px; font-family: 'DM Mono', monospace; letter-spacing: 0.02em; }
+
+        .plan-features { flex: 1; display: flex; flex-direction: column; gap: 9px; margin-bottom: 24px; }
+        .feat-on { display: flex; align-items: center; gap: 8px; font-size: 12.5px; color: #778877; font-family: 'DM Mono', monospace; }
+        .feat-on-check { color: #6a9e78; font-size: 12px; flex-shrink: 0; }
+        .feat-off { display: flex; align-items: center; gap: 8px; font-size: 12.5px; color: #1e3a28; font-family: 'DM Mono', monospace; }
+
+        .plan-btn {
+          padding: 13px; border-radius: 10px; font-size: 13px; font-weight: 600;
+          cursor: pointer; transition: all 0.18s; font-family: 'DM Mono', monospace;
+          border: 1px solid #1a2e1e; background: transparent; color: #4a6e54;
+          letter-spacing: 0.02em;
+        }
+        .plan-btn:hover { border-color: #6a9e78; color: #c9dcc8; }
+        .plan-btn.primary { background: #6a9e78; color: #fff; border-color: #6a9e78; }
+        .plan-btn.primary:hover { background: #7ab088; box-shadow: 0 4px 16px rgba(106,158,120,0.25); }
+
+        .topup-section {
+          background: #0d160f; border: 1px solid #1a2e1e; border-radius: 18px; padding: 32px;
+        }
+        .topup-title { font-size: 20px; font-weight: 700; color: #e8e8e8; margin-bottom: 6px; }
+        .topup-sub { font-size: 13px; color: #4a6e54; font-family: 'DM Mono', monospace; margin-bottom: 0; }
+        .topup-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 20px; }
+        .topup-card {
+          border: 1px solid #1a2e1e; border-radius: 12px; padding: 18px 20px;
+          display: flex; justify-content: space-between; align-items: center;
+          transition: border-color 0.2s;
+        }
+        .topup-card:hover { border-color: #2e4e38; }
+        .topup-pack-name { font-size: 13px; font-weight: 700; color: #c9dcc8; font-family: 'DM Mono', monospace; }
+        .topup-pack-sub { font-size: 11px; color: #2e4e38; font-family: 'DM Mono', monospace; margin-top: 3px; }
+        .topup-btn {
+          background: #6a9e78; color: #fff; border: none; padding: 9px 18px;
+          border-radius: 8px; font-size: 13px; font-weight: 700; cursor: pointer;
+          font-family: 'DM Mono', monospace; transition: all 0.18s;
+        }
+        .topup-btn:hover { background: #7ab088; }
+
+        @media (max-width: 768px) {
+          .plans-grid { grid-template-columns: 1fr; }
+          .topup-cards { grid-template-columns: 1fr; }
+        }
       `}</style>
 
-      <nav className="pricing-nav">
-        <div className="pricing-logo" onClick={() => navigate('/')}>Nuxply</div>
-        <div style={{display:'flex',gap:'8px',alignItems:'center'}}>
-          <button className="back-btn" onClick={() => navigate('/')}>Back</button>
-          <button className="theme-btn" onClick={() => setDark(d => !d)}>{dark ? '☀️' : '🌙'}</button>
+      <nav className="p-nav">
+        <div className="p-logo" onClick={() => navigate('/')}>
+          <img src={logo} alt="Nuxply" className="p-logo-img" />
+          <span className="p-logo-text">nuxply</span>
         </div>
+        <button className="p-back" onClick={() => navigate('/')}>← Back</button>
       </nav>
 
-      <div className="pricing-body">
-        <h1 className="pricing-title">Simple, honest pricing</h1>
-        <p className="pricing-sub">Start free. Upgrade when you need more matches.</p>
+      <div className="p-body">
+        <div className="p-eyebrow">Pricing</div>
+        <h1 className="p-title">Simple, honest pricing</h1>
+        <p className="p-sub">Start free. Upgrade when you need more matches.</p>
 
         <div className="plans-grid">
           {plans.map(plan => (
@@ -104,34 +151,47 @@ export default function Pricing() {
               {plan.highlight && <div className="pop-badge">Most popular</div>}
               <div className="plan-name">{plan.name}</div>
               <div className="plan-desc">{plan.desc}</div>
-              <div><span className="plan-price">{plan.price}</span><span className="plan-period">{plan.period}</span></div>
+              <div style={{ marginBottom: 2 }}>
+                <span className="plan-price">{plan.price}</span>
+                <span className="plan-period"> {plan.period}</span>
+              </div>
               <div className="plan-apps">{plan.apps}</div>
               <div className="plan-features">
-                {plan.features.map(f => <div key={f} className="feat-on"><span style={{color:'#4ade80'}}>✓</span>{f}</div>)}
-                {plan.notIncluded.map(f => <div key={f} className="feat-off"><span>✗</span>{f}</div>)}
+                {plan.features.map(f => (
+                  <div key={f} className="feat-on">
+                    <span className="feat-on-check">✓</span>{f}
+                  </div>
+                ))}
+                {plan.notIncluded.map(f => (
+                  <div key={f} className="feat-off">
+                    <span style={{ fontSize: 11 }}>✗</span>{f}
+                  </div>
+                ))}
               </div>
-              <button className={`plan-btn ${plan.highlight ? 'primary' : ''}`} onClick={plan.action}>{plan.cta}</button>
+              <button className={`plan-btn ${plan.highlight ? 'primary' : ''}`} onClick={plan.action}>
+                {plan.cta}
+              </button>
             </div>
           ))}
         </div>
 
         <div className="topup-section">
-          <div style={{fontSize:'20px',fontWeight:'700',color:'var(--text)',fontFamily:'Georgia,serif',marginBottom:'4px'}}>Need more matches?</div>
-          <div style={{fontSize:'14px',color:'var(--text2)',fontFamily:'sans-serif'}}>Buy top-up credits anytime — they never expire and work on any plan.</div>
+          <div className="topup-title">Need more matches?</div>
+          <div className="topup-sub">Buy top-up credits anytime — they never expire and work on any plan.</div>
           <div className="topup-cards">
             <div className="topup-card">
               <div>
-                <div style={{fontSize:'14px',fontWeight:'700',color:'var(--text)',fontFamily:'sans-serif'}}>Small pack</div>
-                <div style={{fontSize:'12px',color:'var(--text3)',fontFamily:'sans-serif',marginTop:'2px'}}>10 extra job matches</div>
+                <div className="topup-pack-name">Small pack</div>
+                <div className="topup-pack-sub">10 extra job matches</div>
               </div>
-              <button className="topup-price-btn" onClick={() => openCheckout('pri_01kmjs1naq2j27v8fsc10t3knx')}>$3</button>
+              <button className="topup-btn" onClick={() => openCheckout('pri_01kmjs1naq2j27v8fsc10t3knx')}>$3</button>
             </div>
             <div className="topup-card">
               <div>
-                <div style={{fontSize:'14px',fontWeight:'700',color:'var(--text)',fontFamily:'sans-serif'}}>Large pack</div>
-                <div style={{fontSize:'12px',color:'var(--text3)',fontFamily:'sans-serif',marginTop:'2px'}}>25 extra job matches</div>
+                <div className="topup-pack-name">Large pack</div>
+                <div className="topup-pack-sub">25 extra job matches</div>
               </div>
-              <button className="topup-price-btn" onClick={() => openCheckout('pri_01kmjs2ffjfvtq1rms69t7cznb')}>$6</button>
+              <button className="topup-btn" onClick={() => openCheckout('pri_01kmjs2ffjfvtq1rms69t7cznb')}>$6</button>
             </div>
           </div>
         </div>
