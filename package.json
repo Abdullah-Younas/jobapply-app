@@ -12,6 +12,7 @@
   "dependencies": {
     "@paddle/paddle-js": "^1.6.2",
     "@supabase/supabase-js": "^2.99.3",
+    "motion": "^12.38.0",
     "pdfjs-dist": "^5.5.207",
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
