@@ -131,7 +131,7 @@ export default function Dashboard() {
         </div>
 
         <div className="info-box">
-          Your AI finds matching jobs daily. Each application uses <strong>2 credits</strong> — you have <strong>{profile?.monthly_quota ?? 0} credits</strong> remaining this month (<strong>{appsLeft} applications</strong> left).
+          Your AI finds matching jobs daily. Each application uses <strong>1 credits</strong> — you have <strong>{profile?.monthly_quota ?? 0} credits</strong> remaining this month (<strong>{appsLeft} applications</strong> left).
         </div>
 
         {pct >= 80 && profile?.plan !== 'premium' && (
