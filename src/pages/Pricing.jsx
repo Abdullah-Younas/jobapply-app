@@ -1,22 +1,9 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { initializePaddle } from '@paddle/paddle-js'
 import logo from '../assets/logo.png'
 
 export default function Pricing() {
   const navigate = useNavigate()
-  const [paddle, setPaddle] = useState(null)
-
-  useEffect(() => {
-    initializePaddle({
-      environment: 'production',
-      token: import.meta.env.VITE_PADDLE_TOKEN
-    }).then(p => setPaddle(p))
-  }, [])
-
-  function openCheckout(priceId) {
-    paddle?.Checkout.open({ items: [{ priceId, quantity: 1 }] })
-  }
 
   const plans = [
     {
@@ -31,14 +18,14 @@ export default function Pricing() {
       desc: '50 targeted applications/month — the sweet spot for landing interviews fast',
       features: ['AI skill matching', 'AI cover letter', 'Daily auto-matching', 'Application log', 'CV upload', 'Top-up credits available'],
       notIncluded: ['Priority support'],
-      cta: 'Get Standard', action: () => openCheckout('pri_01kmjryv5fyhkkqw1jq8e6dkyq'), highlight: true
+      cta: 'Get Standard', action: () => window.open('https://nuxply.lemonsqueezy.com/checkout/buy/15b75db2-54fc-400a-b3d7-6b60b7f8c74a', '_blank'), highlight: true
     },
     {
       name: 'Premium', price: '$25', period: '/month', apps: '100 job matches/month',
       desc: 'Maximum reach, fast results',
       features: ['AI skill matching', 'AI cover letter', 'Daily auto-matching', 'Application log', 'CV upload', 'Top-up credits available', 'Priority support'],
       notIncluded: [],
-      cta: 'Get Premium', action: () => openCheckout('pri_01kmjs00hgnzqbchrqgzky9cq1'), highlight: false
+      cta: 'Get Premium', action: () => window.open('https://nuxply.lemonsqueezy.com/checkout/buy/86158a5a-1cd4-4962-ae3a-4b3cbd3c60f1', '_blank'), highlight: false
     }
   ]
 
@@ -195,14 +182,14 @@ export default function Pricing() {
                 <div className="topup-pack-name">Small pack</div>
                 <div className="topup-pack-sub">10 extra job matches</div>
               </div>
-              <button className="topup-btn" onClick={() => openCheckout('pri_01kmjs1naq2j27v8fsc10t3knx')}>$3</button>
+              <button className="topup-btn" onClick={() => window.open('https://nuxply.lemonsqueezy.com/checkout/buy/20f383cf-285d-4b88-b7bb-fbae4c1f4d92', '_blank')}>$3</button>
             </div>
             <div className="topup-card">
               <div>
                 <div className="topup-pack-name">Large pack</div>
                 <div className="topup-pack-sub">25 extra job matches</div>
               </div>
-              <button className="topup-btn" onClick={() => openCheckout('pri_01kmjs2ffjfvtq1rms69t7cznb')}>$6</button>
+              <button className="topup-btn" onClick={() => window.open('https://nuxply.lemonsqueezy.com/checkout/buy/710d730d-f886-41bb-8158-19189655f18f', '_blank')}>$6</button>
             </div>
           </div>
         </div>
