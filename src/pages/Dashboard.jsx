@@ -145,8 +145,8 @@ export default function Dashboard() {
           <div className="d-card-title">Top-up credits</div>
           <p style={{ fontSize: 13, color: '#2e4e38', fontFamily: "'DM Mono', monospace", lineHeight: 1.6 }}>Credits never expire and work on any plan.</p>
           <div className="topup-row">
-            <button className="topup-btn-ghost" onClick={() => window.open('https://xautoapplyai.lemonsqueezy.com/checkout/buy/6a62072c-9f2b-4cbb-b37f-0d634828d72a', '_blank')}>10 credits — $3</button>
-            <button className="topup-btn-fill" onClick={() => window.open('https://xautoapplyai.lemonsqueezy.com/checkout/buy/8e9b9d72-bc63-4a2a-bef3-0061f81bb4c8', '_blank')}>25 credits — $6</button>
+            <button className="topup-btn-ghost" onClick={() => window.open('https://nuxply.lemonsqueezy.com/checkout/buy/06a413af-17bc-4276-8cbe-4c29d2da02aa', '_blank')}>10 credits — $3</button>
+            <button className="topup-btn-fill" onClick={() => window.open('https://nuxply.lemonsqueezy.com/checkout/buy/5a7a4cbc-8947-4346-b39c-786021b8a9d9', '_blank')}>25 credits — $6</button>
           </div>
         </div>
 

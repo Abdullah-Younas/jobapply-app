@@ -18,14 +18,14 @@ export default function Pricing() {
       desc: '50 targeted applications/month — the sweet spot for landing interviews fast',
       features: ['AI skill matching', 'AI cover letter', 'Daily auto-matching', 'Application log', 'CV upload', 'Top-up credits available'],
       notIncluded: ['Priority support'],
-      cta: 'Get Standard', action: () => window.open('https://nuxply.lemonsqueezy.com/checkout/buy/15b75db2-54fc-400a-b3d7-6b60b7f8c74a', '_blank'), highlight: true
+      cta: 'Get Standard', action: () => window.open('https://nuxply.lemonsqueezy.com/checkout/buy/34ce71c3-0a5d-4927-8f13-28cea2619018', '_blank'), highlight: true
     },
     {
       name: 'Premium', price: '$25', period: '/month', apps: '100 job matches/month',
       desc: 'Maximum reach, fast results',
       features: ['AI skill matching', 'AI cover letter', 'Daily auto-matching', 'Application log', 'CV upload', 'Top-up credits available', 'Priority support'],
       notIncluded: [],
-      cta: 'Get Premium', action: () => window.open('https://nuxply.lemonsqueezy.com/checkout/buy/86158a5a-1cd4-4962-ae3a-4b3cbd3c60f1', '_blank'), highlight: false
+      cta: 'Get Premium', action: () => window.open('https://nuxply.lemonsqueezy.com/checkout/buy/0387d0e3-4c0c-43bf-a599-bcb12b32ebbe', '_blank'), highlight: false
     }
   ]
 
