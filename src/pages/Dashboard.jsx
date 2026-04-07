@@ -36,7 +36,7 @@ export default function Dashboard() {
   const total = profile?.plan === 'premium' ? 100 : profile?.plan === 'standard' ? 50 : 10
   const used = total - (profile?.monthly_quota ?? total)
   const pct = Math.round((used / total) * 100)
-  const appsLeft = Math.floor((profile?.monthly_quota ?? 0) / 2)
+  const appsLeft = Math.floor((profile?.monthly_quota ?? 0))
 
   const dockItems = [
     {
