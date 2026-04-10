@@ -174,7 +174,8 @@ export default function Profile() {
           </div>
           <div className="field-wrap">
             <label className="field-label">Job title preference</label>
-            <input className="pr-input" type="text" value={form.job_title_preference} onChange={e => setForm({...form, job_title_preference:e.target.value})} placeholder="Software Developer, Frontend Engineer..." />
+            <input className="pr-input" type="text" value={form.job_title_preference} onChange={e => setForm({...form, job_title_preference:e.target.value})} placeholder="e.g. Frontend Developer" />
+            <span className="field-hint">Enter one job title only — e.g. "Frontend Developer" not "Developer, Designer"</span>
           </div>
           <div className="field-wrap">
             <label className="field-label">Your skills</label>
@@ -197,8 +198,39 @@ export default function Profile() {
           </div>
           <div className="field-wrap">
             <label className="field-label">Country</label>
-            <input className="pr-input" type="text" value={form.country} onChange={e => setForm({...form, country:e.target.value})} placeholder="Pakistan, United States..." />
-            <span className="field-hint">Leave empty for worldwide search</span>
+            <select className="pr-select" value={form.country} onChange={e => setForm({...form, country:e.target.value})}>
+              <option value="">Worldwide (no preference)</option>
+              <option value="Pakistan">Pakistan</option>
+              <option value="United States">United States</option>
+              <option value="United Kingdom">United Kingdom</option>
+              <option value="Canada">Canada</option>
+              <option value="Australia">Australia</option>
+              <option value="Germany">Germany</option>
+              <option value="Netherlands">Netherlands</option>
+              <option value="UAE">UAE</option>
+              <option value="Saudi Arabia">Saudi Arabia</option>
+              <option value="India">India</option>
+              <option value="Singapore">Singapore</option>
+              <option value="Ireland">Ireland</option>
+              <option value="Poland">Poland</option>
+              <option value="Portugal">Portugal</option>
+              <option value="Spain">Spain</option>
+              <option value="France">France</option>
+              <option value="Sweden">Sweden</option>
+              <option value="Denmark">Denmark</option>
+              <option value="Norway">Norway</option>
+              <option value="Finland">Finland</option>
+              <option value="New Zealand">New Zealand</option>
+              <option value="Brazil">Brazil</option>
+              <option value="Mexico">Mexico</option>
+              <option value="Argentina">Argentina</option>
+              <option value="Philippines">Philippines</option>
+              <option value="Bangladesh">Bangladesh</option>
+              <option value="Nigeria">Nigeria</option>
+              <option value="Kenya">Kenya</option>
+              <option value="South Africa">South Africa</option>
+            </select>
+            <span className="field-hint">Select your country for location-based job matching</span>
           </div>
           <div className="field-wrap">
             <label className="field-label">City</label>
