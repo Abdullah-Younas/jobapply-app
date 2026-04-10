@@ -182,14 +182,14 @@ export default function Pricing() {
                 <div className="topup-pack-name">Small pack</div>
                 <div className="topup-pack-sub">10 extra job matches</div>
               </div>
-              <button className="topup-btn" onClick={() => window.open('https://nuxply.lemonsqueezy.com/checkout/buy/20f383cf-285d-4b88-b7bb-fbae4c1f4d92', '_blank')}>$3</button>
+              <button className="topup-btn" onClick={() => window.open('https://nuxply.lemonsqueezy.com/checkout/buy/06a413af-17bc-4276-8cbe-4c29d2da02aa', '_blank')}>$3</button>
             </div>
             <div className="topup-card">
               <div>
                 <div className="topup-pack-name">Large pack</div>
                 <div className="topup-pack-sub">25 extra job matches</div>
               </div>
-              <button className="topup-btn" onClick={() => window.open('https://nuxply.lemonsqueezy.com/checkout/buy/710d730d-f886-41bb-8158-19189655f18f', '_blank')}>$6</button>
+              <button className="topup-btn" onClick={() => window.open('https://nuxply.lemonsqueezy.com/checkout/buy/5a7a4cbc-8947-4346-b39c-786021b8a9d9', '_blank')}>$6</button>
             </div>
           </div>
         </div>
