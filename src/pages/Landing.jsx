@@ -343,7 +343,7 @@ export default function Landing() {
         .steps {
           display: grid;
           grid-template-columns: repeat(3, 1fr);
-          gap: 2px;
+          gap: 12px;
           margin-top: clamp(36px, 5vw, 56px);
         }
         .step {
@@ -352,8 +352,9 @@ export default function Landing() {
           padding: clamp(28px, 3.5vw, 40px) clamp(24px, 3vw, 36px);
           transition: border-color 0.2s;
         }
-        .step:first-child { border-radius: 14px 0 0 14px; }
-        .step:last-child { border-radius: 0 14px 14px 0; }
+        .step:first-child { border-radius: 14px; }
+        .step:last-child { border-radius: 14px; }
+        .step { border-radius: 14px; }
         .step:hover { border-color: var(--border); }
         .step-num {
           font-size: 44px;
@@ -484,8 +485,8 @@ export default function Landing() {
           .hero-right { display: none; }
           .features-grid { grid-template-columns: 1fr; }
           .steps { grid-template-columns: 1fr; gap: 2px; }
-          .step:first-child { border-radius: 14px 14px 0 0; }
-          .step:last-child { border-radius: 0 0 14px 14px; }
+          .step:first-child { border-radius: 14px; }
+          .step:last-child { border-radius: 14px; }
           .testi-grid { grid-template-columns: 1fr; }
           .testi-grid-2 { grid-template-columns: 1fr; }
           .stats-inner { grid-template-columns: repeat(2, 1fr); }
@@ -518,7 +519,7 @@ export default function Landing() {
         <div className="hero-left">
           <div className="hero-badge"><span>✦</span> AI-powered job matching</div>
           <h1 className="hero-title">Your AI finds the <em>right jobs</em> for you</h1>
-          <p className="hero-sub">Upload your CV once. Our AI scans thousands of jobs daily, matches ones where you qualify 70%+, and writes personalized cover letters — ready to apply in one click.</p>
+          <p className="hero-sub">Upload your CV once. Our AI scans thousands of jobs daily, matches ones where you qualify 75%+, and writes personalized cover letters — ready to apply in one click.</p>
           <div className="hero-cta">
             <button className="btn-primary" onClick={() => navigate(session ? '/dashboard' : '/login')}>
               {session ? 'Go to dashboard' : 'Start for free'}
@@ -554,7 +555,7 @@ export default function Landing() {
       <div className="stats-row">
         <div className="stats-inner">
           {[
-            { num: '70%+', label: 'Skill match threshold' },
+            { num: '75%+', label: 'Skill match threshold' },
             { num: '5 min', label: 'Setup time' },
             { num: 'Daily', label: 'New job matches' },
             { num: '100%', label: 'Personalized letters' },
@@ -576,7 +577,7 @@ export default function Landing() {
             <span className="feat-icon">🎯</span>
             <div className="feat-num">01 — Smart matching</div>
             <div className="feat-title">Only jobs you actually qualify for</div>
-            <div className="feat-desc">Our AI reads job requirements and compares them to your skills. If you don't match 70% or more, we skip it. No more applying to roles you'll never hear back from.</div>
+            <div className="feat-desc">Our AI reads job requirements and compares them to your skills. If you don't match 75% or more, we skip it. No more applying to roles you'll never hear back from.</div>
           </div>
           <div className="feat-card">
             <span className="feat-icon">✍️</span>
